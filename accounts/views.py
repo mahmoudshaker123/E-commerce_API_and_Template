@@ -1,6 +1,6 @@
 from django.shortcuts import render , redirect
 from django.contrib.auth.models import User
-from .forms import RegistrationForm
+from .forms import RegisterForm
 from .models import Account
 
 # Activation Email  عشان اعمل اكتيف لليوزر بعد التسجيل
@@ -8,14 +8,14 @@ from django.core.mail import EmailMessage
 from django.contrib.sites.shortcuts import get_current_site
 from django.template.loader import render_to_string
 from django.utils.http import urlsafe_base64_encode , urlsafe_base64_decode
-from django.utils.encoding import force_bytes , force_text
+from django.utils.encoding import force_bytes, force_str
 from django.contrib.auth.tokens import default_token_generator
 from django.core.mail import send_mail
 from django.http import HttpResponse
 
 def register(request):
     if request.method == 'POST':
-        form = RegistrationForm(request.POST)
+        form = RegisterForm(request.POST)
         if form.is_valid():
             first_name = form.cleaned_data['first_name']
             last_name = form.cleaned_data['last_name']
@@ -42,4 +42,13 @@ def register(request):
             send_mail = EmailMessage(mail_subject , message , to=[to_email])
             send_mail.send()
             return redirect('login'+f'?command=verification&email={email}')
+        
+    else:
+        form = RegisterForm()
+    context = {
+        'form': form,
+    }
+
+    return render(request , 'accounts/register.html' , context)  
+
 
