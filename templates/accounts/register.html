@@ -15,6 +15,9 @@
           {{ form|crispy }}
           <button type="submit" class="btn btn-primary w-100 mt-3">Register</button>
       </form>
+      <div class="text-center mt-3">
+        <small> have an account? <a href="{% url 'accounts:login' %}" class="text-primary">Login here</a></small>
+    </div>
   </div>
 </div>
 

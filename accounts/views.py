@@ -68,4 +68,20 @@ def login(request):
     return render(request , 'accounts/login.html')
         
 def activate(request , uidb64 , token):
-    pass
+    try:
+        uid = urlsafe_base64_decode(uidb64).decode()
+        user = Account._default_manager.get(pk=uid)
+
+    except(TypeError , ValueError , OverflowError , Account.DoesNotExist):
+        user = None
+
+    if user is not None and default_token_generator.check_token(user , token):
+        user.is_active = True
+        user.save()
+        messages.success(request , 'Congratulations! Your account is activated.')
+        return redirect('accounts:login')
+    else:
+        messages.error(request , 'Invalid Activation Link')
+        return redirect('accounts:register')
+    
+    

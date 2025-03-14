@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+
+{% if request.GET.command == 'verification'%}
+
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+  <strong>Success!</strong> Your account has been verified. You can now login.
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+
+{% endif %}
+
+{% if request.GET.command == 'password_reset'%}
+
+<div class="container d-flex justify-content-center mt-5">
+  <div class="card p-4 shadow-lg" style="max-width: 400px; width: 100%;">
+      <div class="text-center">
+          <h2 class="mb-4 text-primary">Login</h2>
+      </div>
+      <form method="POST">
+          {% csrf_token %}
+          <div class="mb-3">
+              <label for="email" class="form-label">Email</label>
+              <input type="email" name="email" id="email" class="form-control" required>
+          </div>
+          <div class="mb-3">
+              <label for="password" class="form-label">Password</label>
+              <input type="password" name="password" id="password" class="form-control" required>
+          </div>
+          <button type="submit" class="btn btn-primary w-100 mt-3">Login</button>
+      </form>
+      <div class="text-center mt-3">
+          <small>Don't have an account? <a href="{% url 'accounts:register' %}" class="text-primary">Register here</a></small>
+      </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,10 @@
+{% autoescape off %}
+
+Hello {{ user.username }},
+You have requested to verify your email address. Please click the link below to verify your email address.
+
+http://{{ domain }}{% url 'accounts:activate' uidb64=uid token=token%}
+
+if you did not request this, please ignore this email.
+
+{% endautoescape %}
