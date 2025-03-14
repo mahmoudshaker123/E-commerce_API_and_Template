@@ -1,7 +1,9 @@
 from django.shortcuts import render , redirect
 from django.contrib.auth.models import User
-from .forms import RegisterForm
-from .models import Account
+from .forms import *
+from .models import *
+from django.contrib import messages
+from django.contrib.auth import authenticate , login as login_auth , logout
 
 # Activation Email  عشان اعمل اكتيف لليوزر بعد التسجيل
 from django.core.mail import EmailMessage
@@ -52,3 +54,18 @@ def register(request):
     return render(request , 'accounts/register.html' , context)  
 
 
+def login(request):
+    if request.method == 'POST':
+        email = request.POST['email']
+        password = request.POST['password']
+        user = authenticate(request , email=email , password=password)
+        if user is not None:
+            login_auth(request , user)
+            return redirect('home')
+        else:
+            return redirect('accounts:login')
+        
+    return render(request , 'accounts/login.html')
+        
+def activate(request , uidb64 , token):
+    pass

@@ -22,3 +22,15 @@ class RegisterForm(forms.ModelForm):
             raise forms.ValidationError("Passwords do not match.")
 
         return cleaned_data
+    
+    def __init__(self , *args , **kwargs):
+        super(RegisterForm , self).__init__(*args , **kwargs)
+        self.fields['first_name'].widget.attrs['placeholder'] = 'Enter First Name'
+        self.fields['last_name'].widget.attrs['placeholder'] = 'Enter Last Name'
+        self.fields['country'].widget.attrs['placeholder'] = 'Enter Country'
+        self.fields['email'].widget.attrs['placeholder'] = 'Enter Email Address'
+        self.fields['phone_number'].widget.attrs['placeholder'] = 'Enter Phone Number'
+        self.fields['password'].widget.attrs['placeholder'] = 'Enter Password'
+        self.fields['confirm_password'].widget.attrs['placeholder'] = 'Enter Confirm Password'
+        for field in self.fields:
+            self.fields[field].widget.attrs['class'] = 'form-control'
