@@ -1,0 +1,26 @@
+
+
+<div class="message-container text-center">
+    {% if messages %}
+        {% for message in messages %}
+            <div id="message" class="container">
+                <div {% if message.tags %}class="alert alert-{{ message.tags }}"{% endif %} role="alert">
+                    {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}Error: {% endif %}
+                    <h5><b>{{ message }}</b></h5>
+                </div>
+            </div>
+        {% endfor %}
+    {% endif %}
+</div>
+
+
+<script src='https://code.jquery.com/jquery-3.6.0.min.js'></script>
+
+<script>
+
+    $(document).ready(function(){
+        setTimeout(function(){
+            $('.container').fadeOut('slow');
+        }, 3000);
+    });
+</script>

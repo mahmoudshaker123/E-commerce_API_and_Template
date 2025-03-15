@@ -15,6 +15,8 @@ from django.contrib.auth.tokens import default_token_generator
 from django.core.mail import send_mail
 from django.http import HttpResponse
 
+from django.contrib import messages
+
 def register(request):
     if request.method == 'POST':
         form = RegisterForm(request.POST)
@@ -61,8 +63,10 @@ def login(request):
         user = authenticate(request , email=email , password=password)
         if user is not None:
             login_auth(request , user)
-            return redirect('home')
+            messages.success(request , 'Logged In Successfully')
+            #return redirect('home')
         else:
+            messages.error(request , 'Invalid Login Credentials')
             return redirect('accounts:login')
         
     return render(request , 'accounts/login.html')
@@ -82,6 +86,6 @@ def activate(request , uidb64 , token):
         return redirect('accounts:login')
     else:
         messages.error(request , 'Invalid Activation Link')
-        return redirect('accounts:register')
+        return redirect('accounts:login')
     
     

@@ -7,20 +7,50 @@
 
 {% if request.GET.command == 'verification'%}
 
-<div class="alert alert-success alert-dismissible fade show" role="alert">
-  <strong>Success!</strong> Your account has been verified. You can now login.
-  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+<div class="card text-center shadow-lg p-3 mb-5 bg-body rounded" style="max-width: 400px; margin: auto; margin-top: 50px;">
+    <div class="card-body">
+        <h5 class="card-title text-success">Registration Successful!</h5>
+        <p class="card-text">
+            A verification email has been sent to your inbox. Please activate your account before logging in.
+        </p>
+        <a href="{% url 'accounts:login' %}" class="btn btn-primary">Go to Login</a>
+    </div>
 </div>
 
-{% endif %}
+{% else %}
 
-{% if request.GET.command == 'password_reset'%}
 
 <div class="container d-flex justify-content-center mt-5">
   <div class="card p-4 shadow-lg" style="max-width: 400px; width: 100%;">
       <div class="text-center">
           <h2 class="mb-4 text-primary">Login</h2>
       </div>
+
+      <div class="message-container text-center">
+        {% if messages %}
+            {% for message in messages %}
+                <div id="message" class="container">
+                    <div {% if message.tags %}class="alert alert-{{ message.tags }}"{% endif %} role="alert">
+                        {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}Error: {% endif %}
+                        <h5><b>{{ message }}</b></h5>
+                    </div>
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+    
+    
+    
+    <script>
+    
+        $(document).ready(function(){
+            setTimeout(function(){
+                $('.container').fadeOut('slow');
+            }, 3000);
+        });
+    </script>
+
+    
       <form method="POST">
           {% csrf_token %}
           <div class="mb-3">
@@ -38,4 +68,6 @@
       </div>
   </div>
 </div>
+    
+    {% endif %}
 {% endblock %}
