@@ -26,6 +26,7 @@
           <h2 class="mb-4 text-primary">Login</h2>
       </div>
 
+
       <div class="message-container text-center">
         {% if messages %}
             {% for message in messages %}
@@ -50,8 +51,9 @@
         });
     </script>
 
+    {% include "includes/alerts.html" %}
     
-      <form method="POST">
+      <form action="{% url "accounts:login" %}" method="POST">
           {% csrf_token %}
           <div class="mb-3">
               <label for="email" class="form-label">Email</label>
