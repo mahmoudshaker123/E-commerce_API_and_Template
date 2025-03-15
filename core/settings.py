@@ -40,6 +40,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'accounts',
+    'store',
+
+
     'crispy_forms',
     "crispy_bootstrap4",
 
@@ -145,6 +148,8 @@ EMAIL_HOST_PASSWORD = 'ugsq zwby zeqe lubi'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
+
+AUTH_USER_MODEL = 'accounts.Account'
 
 MESSAGE_TAGS = {
     messages.ERROR: "danger",
