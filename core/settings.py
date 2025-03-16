@@ -88,10 +88,15 @@ WSGI_APPLICATION = 'core.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'ecommerce2025',  # اسم قاعدة البيانات
+        'USER': 'mahmoud',  # اسم المستخدم
+        'PASSWORD': 'ecommerce2025',  # كلمة المرور
+        'HOST': 'localhost',  # إذا كنت تستخدم قاعدة بيانات محلية
+        'PORT': '5432',  # المنفذ الافتراضي لـ PostgreSQL
     }
 }
+
 
 
 # Password validation
