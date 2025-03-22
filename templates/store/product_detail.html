@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{%block title %}Product detail{% endblock %}
+
+{% block content %}
+    
+  <!-- product details section -->
+  <section class="product_details_section layout_padding">
+    <div class="container">
+      <div class="heading_container heading_center">
+        <h2>
+          Product Details
+        </h2>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="img-box">
+            <img src="{{detail.image.url}}" alt="Product Name" class="img-fluid">
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="detail-box">
+            <h4>{{detail.name}}</h4>
+            <h5>
+              <span>$</span> {{detail.price}}
+            </h5>
+            <p>
+                {{detail.description}}
+                </p>
+            <div class="star_container">
+              <i class="fa fa-star" aria-hidden="true"></i>
+              <i class="fa fa-star" aria-hidden="true"></i>
+              <i class="fa fa-star" aria-hidden="true"></i>
+              <i class="fa fa-star" aria-hidden="true"></i>
+              <i class="fa fa-star-half-o" aria-hidden="true"></i>
+            </div>
+            <a href="" class="add_cart_btn">
+              <span>
+                Add To Cart
+              </span>
+            </a>
+          </div>
+        </div>
+      </div>
+     {% comment %}
+         <div class="row mt-5">
+           <div class="col-md-12">
+             <h4>Additional Information</h4>
+             <ul>
+               <li>Feature 1: Description of the feature.</li>
+               <li>Feature 2: Description of the feature.</li>
+               <li>Feature 3: Description of the feature.</li>
+               <li>Feature 4: Description of the feature.</li>
+             </ul>
+           </div>
+         </div>
+     {% endcomment %}
+    </div>
+ 
+  
+  <!-- end product details section -->
+  {%endblock%}

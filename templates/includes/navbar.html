@@ -1,5 +1,4 @@
-
-    <!-- header section strats -->
+<!-- header section strats -->
     <header class="header_section">
       <div class="header_top">
         <div class="container-fluid">
@@ -58,19 +57,20 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
               <ul class="navbar-nav ">
                 <li class="nav-item active">
-                  <a class="nav-link" href="index.html">Home</a>
+                  <a class="nav-link" href="{% url "store:list_product" %}">Home</a>
                 </li>
                 <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Categories
+                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      Categories
                   </a>
                   <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="category1.html">Category 1</a>
-                    <a class="dropdown-item" href="category2.html">Category 2</a>
-                    <a class="dropdown-item" href="category3.html">Category 3</a>
+                      {% for x in categories %}
+                          <a class="dropdown-item" href="{{x.get_category_url}}">{{ x.name }}</a>
+                      {% endfor %}
                   </div>
-                </li>
-                
+              </li>
+              
                 <li class="nav-item">
                   <a class="nav-link" href="about.html"> About</a>
                 </li>
@@ -90,3 +90,5 @@
         </div>
       </div>
     </header>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>

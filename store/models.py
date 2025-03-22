@@ -1,6 +1,6 @@
 from django.db import models
 from django.utils.text import slugify
-
+from django.urls import reverse
 # Create your models here.
 
 class Category(models.Model):
@@ -12,6 +12,10 @@ class Category(models.Model):
         if not self.slug:
             self.slug = slugify(self.name)
         super(Category, self).save(*args, **kwargs)
+
+    
+    def get_category_url(self):
+        return reverse('store:product_by_category', args=[self.slug])
 
 
     def __str__(self):
@@ -31,12 +35,15 @@ class Product(models.Model):
     status = models.CharField(max_length=2, choices=Status.choices, default=Status.AVAILABLE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    category = models.ForeignKey(Category, on_delete=models.CASCADE) 
+    category = models.ForeignKey(Category, on_delete=models.CASCADE , null=True, blank=True) 
 
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = slugify(self.name)
         super(Product, self).save(*args, **kwargs)
+
+    def get_product_url(self):
+        return reverse('store:product_detail', args=[self.slug])
 
     def __str__(self):
         return self.name
