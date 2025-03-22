@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'accounts',
     'store',
+    'cart',
 
 
     'crispy_forms',
@@ -163,3 +164,6 @@ AUTH_USER_MODEL = 'accounts.Account'
 MESSAGE_TAGS = {
     messages.ERROR: "danger",
 }
+
+# Cart session id
+CART_SESSION_ID = 'cart'
