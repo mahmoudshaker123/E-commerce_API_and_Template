@@ -45,6 +45,7 @@ INSTALLED_APPS = [
 
     'crispy_forms',
     "crispy_bootstrap4",
+    'django.contrib.postgres',
 
 
 ]
@@ -89,11 +90,11 @@ WSGI_APPLICATION = 'core.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'ecommerce2025',  # اسم قاعدة البيانات
-        'USER': 'mahmoud',  # اسم المستخدم
-        'PASSWORD': 'ecommerce2025',  # كلمة المرور
-        'HOST': 'localhost',  # إذا كنت تستخدم قاعدة بيانات محلية
-        'PORT': '5432',  # المنفذ الافتراضي لـ PostgreSQL
+        'NAME': 'ecommerce2025',   
+        'USER': 'mahmoud',   
+        'PASSWORD': 'ecommerce2025',  
+        'HOST': 'localhost',  
+        'PORT': '5432',  
     }
 }
 

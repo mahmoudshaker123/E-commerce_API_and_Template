@@ -1,5 +1,6 @@
 from django.shortcuts import render , redirect , get_object_or_404
 from .models import Product , Category
+from django.contrib.postgres.search import SearchVector, SearchQuery, SearchRank
 # Create your views here.
 
 def list_product(request , category_slug=None):
@@ -26,3 +27,20 @@ def product_detail(request, product_slug):
     return render(request , 'store/product_detail.html' , context)
 
   
+def product_search(request):
+    query = request.GET.get('query', None)
+    results = []
+
+    if query:
+        search_query = SearchQuery(query)
+        results = Product.objects.annotate(
+            search=SearchVector('name', 'description')
+        ).filter(search=search_query, status=Product.Status.AVAILABLE)
+
+    context = {
+        'query': query,
+        'results': results
+    }
+
+    return render(request, 'store/search.html', context)
+

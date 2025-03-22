@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}Product search{% endblock %}
+
+{% block content %}
+
+{% if query %}
+
+    <h2>Search results for "{{ query }}"</h2>
+
+    {% if results %}
+        <ul>
+            {% for product in results %}
+                <li><a href="{% url 'store:product_detail' product.slug %}">{{ product.name }}</a></li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No products found</p>
+    {% endif %}
+
+{% else %}
+
+    <h2>Search for a product</h2>
+
+    <form class="search_form" method="get" action="{% url 'store:product_search' %}">
+        <input type="text" name="query" class="form-control" placeholder="Search here...">
+        <button type="submit">
+            <i class="fa fa-search" aria-hidden="true"></i>
+        </button>
+    </form>
+    
+    
+
+{% endif %}
+
+{% endblock %}
+

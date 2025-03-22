@@ -17,12 +17,13 @@
                 </span>
               </a>
             </div>
-            <from class="search_form">
-              <input type="text" class="form-control" placeholder="Search here...">
-              <button class="" type="submit">
-                <i class="fa fa-search" aria-hidden="true"></i>
+            <form class="search_form" method="get" action="{% url 'store:product_search' %}">
+              <input type="text" name="query" class="form-control" placeholder="Search here...">
+              <button type="submit">
+                  <i class="fa fa-search" aria-hidden="true"></i>
               </button>
-            </from>
+          </form>
+          
             <div class="user_option_box">
               <a href="" class="account-link">
                 <i class="fa fa-user" aria-hidden="true"></i>
