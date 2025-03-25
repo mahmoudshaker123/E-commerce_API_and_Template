@@ -22,7 +22,7 @@
           <div class="detail-box">
             <h4>{{detail.name}}</h4>
             <h5>
-              <span>$</span> {{detail.price}}
+              <span>${{detail.price}}</span> 
             </h5>
             <p>
                 {{detail.description}}
@@ -34,11 +34,10 @@
               <i class="fa fa-star" aria-hidden="true"></i>
               <i class="fa fa-star-half-o" aria-hidden="true"></i>
             </div>
-            <a href="" class="add_cart_btn">
-              <span>
-                Add To Cart
-              </span>
-            </a>
+            <form action="{% url 'cart:cart_add' detail.id %}" method="post">
+              {{cart_product_form}}
+              {% csrf_token %}
+              <button type="submit" class="btn btn-primary">Add to Cart</button>
           </div>
         </div>
       </div>
