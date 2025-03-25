@@ -21,6 +21,9 @@
                                     <th scope="col">Price</th>
                                     <th scope="col">Quantity</th>
                                     <th scope="col">Total</th>
+                                    <th scope="col">Remove</th>
+
+
                                 </tr>
                             </thead>
                             <tbody>
@@ -36,9 +39,21 @@
                                     </td>
                                     <td>${{item.price}}</td>
                                     <td>
-                                      {{item.quantity}}
-                                    </td>
+
+                                        <form action="{% url 'cart:cart_add' product.id %}" method="post">
+                                          {% csrf_token %}
+                                          {{item.update_quantity_form.quantity}}
+                                          {{item.update_quantity_form.update}}
+                                          <button type="submit" class="btn btn-primary">Update</button>
+                                        </form>
+                                        
                                     <td>${{item.total_price}}</td>
+                                    <td>
+                                        <form action="{% url 'cart:cart_remove' product.id %}" method="post">
+                                            {% csrf_token %}
+                                            <button type="submit" class="btn btn-danger">Remove</button>
+                                        </form>
+                                    </td>
                                 </tr>
                                 <!-- Repeat for more items -->
                                 {% endwith %}
