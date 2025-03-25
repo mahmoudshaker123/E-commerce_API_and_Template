@@ -1,0 +1,174 @@
+{% extends "base.html" %}
+
+
+
+{% block content %}
+    <!-- cart section -->
+    <section class="cart_section layout_padding">
+        <div class="container">
+            <div class="heading_container heading_center">
+                <h2>
+                    Shopping Cart
+                </h2><br><br>
+            </div>
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="cart_items">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Product</th>
+                                    <th scope="col">Price</th>
+                                    <th scope="col">Quantity</th>
+                                    <th scope="col">Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                              {% for item in cart  %}
+                              {% with product=item.product %}
+                                <tr>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <img src="{{product.image.url}}" alt="Product Name" class="img-fluid" style="width: 50px; height: 50px; object-fit: cover; margin-right: 10px;">
+                                            {{ product.name }}
+                                        </div>
+                                    </td>
+                                    <td>${{product.price}}</td>
+                                    <td>
+                                      {{product.quantity}}
+                                    </td>
+                                    <td>${{product.total_price}}</td>
+                                </tr>
+                                <!-- Repeat for more items -->
+                                {% endwith %}
+                                {% endfor %}
+                            </tbody>
+                  
+                        </table>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="cart_summary">
+                        <h4>Cart Summary</h4>
+                        <ul>
+                            <li>Tax: <span>$30</span></li>
+                            <li>Total: <span>${{cart.get_total_price}}</span></li>
+                        </ul>
+                        <form class="coupon_form mt-4">
+                            <label for="coupon_code">Coupon Code</label>
+                            <input type="text" id="coupon_code" class="form-control" placeholder="Enter your code">
+                            <button type="submit" class="btn btn-primary mt-2">Apply Coupon</button>
+                        </form>
+                        <a href="checkout.html" class="btn btn-success mt-4 w-100">Proceed to Checkout</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- end cart section -->
+
+      <!-- info section -->
+      <section class="info_section ">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-3">
+              <div class="info_contact">
+                <h5>
+                  <a href="" class="navbar-brand">
+                    <span>
+                      Minics
+                    </span>
+                  </a>
+                </h5>
+                <p>
+                  <i class="fa fa-map-marker" aria-hidden="true"></i>
+                  Address
+                </p>
+                <p>
+                  <i class="fa fa-phone" aria-hidden="true"></i>
+                  +01 1234567890
+                </p>
+                <p>
+                  <i class="fa fa-envelope" aria-hidden="true"></i>
+                  demo@gmail.com
+                </p>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="info_info">
+                <h5>
+                  Information
+                </h5>
+                <p>
+                  Eligendi sunt, provident, debitis nemo, facilis cupiditate velit libero dolorum aperiam enim nulla iste maxime corrupti ad illo libero minus.
+                </p>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="info_links">
+                <h5>
+                  Useful Link
+                </h5>
+                <ul>
+                  <li>
+                    <a href="index.html">
+                      Home
+                    </a>
+                  </li>
+                  <li>
+                    <a href="about.html">
+                      About
+                    </a>
+                  </li>
+                  <li>
+                    <a href="product.html">
+                      Products
+                    </a>
+                  </li>
+                  <li>
+                    <a href="why.html">
+                      Why Us
+                    </a>
+                  </li>
+                  <li>
+                    <a href="testimonial.html">
+                      Testimonial
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="info_form ">
+                <h5>
+                  Newsletter
+                </h5>
+                <form action="">
+                  <input type="email" placeholder="Enter your email">
+                  <button>
+                    Subscribe
+                  </button>
+                </form>
+                <div class="social_box">
+                  <a href="">
+                    <i class="fa fa-facebook" aria-hidden="true"></i>
+                  </a>
+                  <a href="">
+                    <i class="fa fa-twitter" aria-hidden="true"></i>
+                  </a>
+                  <a href="">
+                    <i class="fa fa-instagram" aria-hidden="true"></i>
+                  </a>
+                  <a href="">
+                    <i class="fa fa-youtube" aria-hidden="true"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    
+
+{% endblock %}

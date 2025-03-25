@@ -28,4 +28,4 @@ def cart_remove(request , product_id):
 def cart_detail(request):
     cart = Cart(request)
     context={'cart':cart}
-    return render(request , 'cart/detail.html' , context)
+    return render(request , 'cart/cart_details.html' , context)
