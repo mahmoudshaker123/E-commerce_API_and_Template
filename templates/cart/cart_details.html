@@ -75,7 +75,7 @@
                             <input type="text" id="coupon_code" class="form-control" placeholder="Enter your code">
                             <button type="submit" class="btn btn-primary mt-2">Apply Coupon</button>
                         </form>
-                        <a href="checkout.html" class="btn btn-success mt-4 w-100">Proceed to Checkout</a>
+                        <a href="{% url "orders:order_create" %}" class="btn btn-success mt-4 w-100">Checkout</a>
                     </div>
                 </div>
             </div>
