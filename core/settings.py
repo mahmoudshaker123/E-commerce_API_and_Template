@@ -160,6 +160,8 @@ EMAIL_HOST_PASSWORD = 'ugsq zwby zeqe lubi'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
+DEFAULT_FROM_EMAIL = ('DEFAULT_FROM_EMAIL')
+
 
 AUTH_USER_MODEL = 'accounts.Account'
 

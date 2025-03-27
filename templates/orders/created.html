@@ -21,6 +21,7 @@
             </ul>
             {% if success == True %}
             <p>Thank you for your order. Your order has been placed successfully.</p>
+            <p style="color: green;">📩 A confirmation email has been sent to your email address.</p>
             <p>Your order number is :   {{ order.order_id }}.</p>
             {% else %}
             <p class="mt-3 text-end"><strong>Total: ${{ cart.get_total_price }}</strong></p>
