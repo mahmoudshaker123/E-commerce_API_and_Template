@@ -61,3 +61,18 @@ class OrderItem(models.Model):
     
     def get_cost(self):
         return self.price * self.quantity
+    
+
+
+class OrderPayment(models.Model):
+    order = models.OneToOneField(Order, related_name='payment', on_delete=models.CASCADE)
+    payment_phone = models.CharField(max_length=20)
+    payment_image = models.ImageField(upload_to='vodafone_cash')
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ('-created_at',)
+        
+
+    def __str__(self) -> str:
+        return f'Payment for Order {self.order.order_id}'
