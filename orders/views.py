@@ -37,4 +37,5 @@ def order_create(request):
     return render(request, 'orders/created.html', {'cart': cart, 'form': form, 'success': success})
 
 
-def 
+def order_payment(request, order_id):
+    pass
