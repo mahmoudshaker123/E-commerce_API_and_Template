@@ -44,6 +44,9 @@ class Order(models.Model):
 
     def get_total_cost(self):
         return sum(item.get_cost() for item in self.items.all())
+    
+    def get_full_name(self):
+        return f'{self.first_name} {self.last_name}'
 
 
 

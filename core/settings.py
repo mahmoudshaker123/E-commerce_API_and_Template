@@ -48,6 +48,8 @@ INSTALLED_APPS = [
     'crispy_forms',
     "crispy_bootstrap4",
     'django.contrib.postgres',
+    'celery',
+    'django_redis',
 
 
 ]

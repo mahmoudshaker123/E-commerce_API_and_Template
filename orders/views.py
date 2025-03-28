@@ -4,7 +4,7 @@ from .forms import OrderForm
 from cart.cart import Cart
 from django.core.mail import send_mail 
 from django.conf import settings
-
+from .tasks import send_emails
 
 def order_create(request):
     cart = Cart(request)
@@ -23,17 +23,11 @@ def order_create(request):
                 )
             # تفريغ السلة بعد الطلب
             cart.clear()
-            # ارسال بريد الكتروني
 
-            subject = 'Order {}'.format(order.order_id)
-            message = 'Dear {},\n\nYou have successfully placed an order. Your order id is {}.'.format(order.first_name, order.order_id)
-            for item in cart:
-                product_name = item['product'].name
-                message += '\n\nProduct: {}\nPrice: {}\nQuantity: {}\n'.format(product_name, item['price'], item['quantity'])
-            
-            email_from = settings.EMAIL_HOST_USER
-            recipient_list = [form.cleaned_data['email']]
-            send_mail(subject, message, email_from, recipient_list)
+            # ارسال ايميل بالطلب
+            order_id = order.order_id
+            send_emails.delay(order_id)
+
             success = True
 
             return render(request, 'orders/created.html', {'order': order, 'success': success})
