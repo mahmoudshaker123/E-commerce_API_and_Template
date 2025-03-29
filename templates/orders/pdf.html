@@ -70,6 +70,22 @@
             font-weight: bold;
             color: #333;
         }
+        .status {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .status .paid {
+            color: green;
+            font-weight: bold;
+        }
+        .status .unpaid {
+            color: red;
+            font-weight: bold;
+        }
+        .status .icon {
+            font-size: 18px;
+        }
         .footer {
             text-align: center;
             margin-top: 20px;
@@ -97,7 +113,16 @@
         <div class="order-details">
             <h3 class="section-title">Order Details</h3>
             <p><strong>Date:</strong> {{ order.created_at }}</p>
-            <p><strong>Status:</strong> {% if order.paid %}Paid{% else %}Unpaid{% endif %}</p>
+            <p class="status">
+                <strong>Status:</strong>
+                {% if order.paid %}
+                <span class="icon">✔</span>
+                <span class="paid">Paid</span>
+                {% else %}
+                <span class="icon">✘</span>
+                <span class="unpaid">Unpaid</span>
+                {% endif %}
+            </p>
         </div>
 
         <div class="items-table">
