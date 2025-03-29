@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render , get_object_or_404 ,redirect
 from .models import Order, OrderItem
 from .forms import OrderForm , OrderPaymentForm
 from cart.cart import Cart
@@ -29,6 +29,7 @@ def order_create(request):
             send_emails.delay(order_id)
 
             success = True
+            return redirect('orders:payment_order', order_id=order.id)
 
             return render(request, 'orders/created.html', {'order': order, 'success': success})
     else:
@@ -37,5 +38,23 @@ def order_create(request):
     return render(request, 'orders/created.html', {'cart': cart, 'form': form, 'success': success})
 
 
-def order_payment(request, order_id):
-    pass
+def order_payment_by_vodafone(request, order_id):
+    order = get_object_or_404(Order , id=order_id)
+    if request.method == 'POST':
+        form = OrderPaymentForm(request.POST, request.FILES)
+        if form.is_valid():
+            order_payment = form.save(commit=False)
+            order_payment.order = order
+            order_payment.paid = True  # تعيين حالة الدفع
+            order_payment.save()
+            return redirect('orders:payment_success', order_id=order.id)
+    else:
+        form = OrderPaymentForm()
+
+    return render(request, 'orders/payment.html', {'form': form, 'order': order})
+
+    
+def payment_success(request, order_id):
+    order= get_object_or_404(Order, id=order_id)
+    return render(request, 'orders/payment_success.html', {'order': order})
+

@@ -45,8 +45,8 @@ INSTALLED_APPS = [
     'orders',
 
 
-    'crispy_forms',
-    "crispy_bootstrap4",
+    "crispy_forms",
+    "crispy_bootstrap5",
     'django.contrib.postgres',
     'celery',
     'django_redis',
@@ -54,6 +54,7 @@ INSTALLED_APPS = [
 
 ]
 
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 CRISPY_TEMPLATE_PACK = "bootstrap5"
 
 
