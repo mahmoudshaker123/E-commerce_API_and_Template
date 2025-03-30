@@ -11,7 +11,6 @@ from django.contrib.admin.views.decorators import staff_member_required
 import weasyprint
 from io import BytesIO
 
-
 def order_create(request):
     cart = Cart(request)
     success = False  
@@ -19,7 +18,15 @@ def order_create(request):
     if request.method == 'POST':
         form = OrderForm(request.POST)
         if form.is_valid():
-            order = form.save()
+            order = form.save(commit=False)
+
+            # تمرير بيانات الخصم والكوبون إلى الطلب
+            if cart.coupon:
+                order.coupon = cart.coupon
+                order.discount = cart.get_discount()
+
+            order.save()
+
             for item in cart:
                 OrderItem.objects.create(
                     order=order,
@@ -31,6 +38,9 @@ def order_create(request):
             # تفريغ السلة بعد الطلب
             cart.clear()
 
+            # إزالة الكوبون من الـ session
+            request.session['coupon_id'] = None
+
             # ارسال ايميل بالطلب
             send_emails.delay(order.order_id)
 
@@ -40,7 +50,6 @@ def order_create(request):
         form = OrderForm()
 
     return render(request, 'orders/created.html', {'cart': cart, 'form': form, 'success': success})
-
 
 def order_payment_by_vodafone(request, order_id):
     order = get_object_or_404(Order, id=order_id)
@@ -64,7 +73,6 @@ def order_payment_by_vodafone(request, order_id):
 
     return render(request, 'orders/payment.html', {'form': form, 'order': order})
 
-
 def payment_success(request, order_id):
     order = get_object_or_404(Order, id=order_id)
 
@@ -75,7 +83,6 @@ def payment_success(request, order_id):
     payment_complated.delay(order_id)
 
     return render(request, 'orders/payment_success.html', {'order': order})
-
 
 @staff_member_required
 def admin_order_pdf(request, order_id):

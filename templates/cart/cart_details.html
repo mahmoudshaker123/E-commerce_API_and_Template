@@ -63,20 +63,37 @@
                         </table>
                     </div>
                 </div>
+
+                
                 <div class="col-lg-4">
-                    <div class="cart_summary">
-                        <h4>Cart Summary</h4>
-                        <ul>
-                            <li>Tax: <span>$30</span></li>
-                            <li>Total: <span>${{cart.get_total_price}}</span></li>
-                        </ul>
-                        <form class="coupon_form mt-4">
-                            <label for="coupon_code">Coupon Code</label>
-                            <input type="text" id="coupon_code" class="form-control" placeholder="Enter your code">
-                            <button type="submit" class="btn btn-primary mt-2">Apply Coupon</button>
-                        </form>
-                        <a href="{% url "orders:order_create" %}" class="btn btn-success mt-4 w-100">Checkout</a>
-                    </div>
+                  <div class="cart_summary">
+                      <h4>Cart Summary</h4>
+                      <ul>
+                          <li>Total: <span>${{ cart.get_total_price }}</span></li>
+                      </ul>
+              
+                      {% if cart.coupon %}
+                      <ul>
+                          <li>Subtotal: <span>${{ cart.get_total_price|floatformat:2 }}</span></li>
+                          <li>Discount: <span>"{{ cart.coupon.code }}" coupon ({{ cart.coupon.discount }}%)</span></li>
+                          <li>Discount: <span>-${{ cart.get_discount|floatformat:2 }}</span></li>
+                      </ul>
+              
+                      <li>Total Price After Discount: <span>${{ cart.get_total_price_after_discount|floatformat:2 }}</span></li>
+              
+                      <!-- زر الانتقال إلى صفحة الطلب بعد تطبيق الكوبون -->
+                      <a href="{% url 'orders:order_create' %}" class="btn btn-success mt-3">Proceed to Order</a>
+                      {% endif %}
+              
+                      <form class="coupon_form mt-4" action="{% url 'coupons:coupon_apply' %}" method="post">
+                          {% csrf_token %}
+                          {{ coupon_apply_form }}
+                          <button type="submit" class="btn btn-primary mt-2">Apply Coupon</button>
+                      </form>
+                  </div>
+              </div>
+              
+              
                 </div>
             </div>
         </div>
