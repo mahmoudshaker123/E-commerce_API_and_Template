@@ -64,7 +64,8 @@ def login(request):
         if user is not None:
             login_auth(request , user)
             messages.success(request , 'Logged In Successfully')
-            return redirect('store:home')
+            return redirect('store:list_product')
+
         else:
             messages.error(request , 'Invalid Login Credentials')
             return redirect('accounts:login')
