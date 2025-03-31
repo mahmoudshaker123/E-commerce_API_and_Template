@@ -3,23 +3,29 @@ from .models import Product , Category
 from django.contrib.postgres.search import SearchVector, SearchQuery, SearchRank
 from cart.forms import CartAddProductForm
 from django.core.cache import cache
+from django.core.paginator import Paginator
 # Create your views here.
 
-def list_product(request , category_slug=None):
+def list_product(request, category_slug=None):
     category = None
     categories = Category.objects.all()
-    products = Product.objects.filter(status =Product.Status.AVAILABLE)
+    products = Product.objects.filter(status=Product.Status.AVAILABLE)
 
     if category_slug:
         category = get_object_or_404(Category, slug=category_slug)
         products = products.filter(category=category)
-    context={
-        'products':products,
-        'category':category,
-        'categories':categories,
-    }
-    return render(request , 'store/list_product.html' , context)
 
+    paginator = Paginator(products, 6)  
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)  
+
+    context = {
+        'products': page_obj,  
+        'category': category,
+        'categories': categories,
+        'page_obj': page_obj,  
+    }
+    return render(request, 'store/list_product.html', context)
 
 def product_detail(request, product_slug):
     cache_key = f'product_{product_slug}' 
