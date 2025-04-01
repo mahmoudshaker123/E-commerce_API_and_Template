@@ -45,8 +45,9 @@ INSTALLED_APPS = [
     'cart',
     'orders',
     'coupons',
+    'api',
 
-
+    'rest_framework',
     "crispy_forms",
     "crispy_bootstrap5",
     'django.contrib.postgres',
