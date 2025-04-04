@@ -8,7 +8,7 @@ from .serializers import CategorySerializer  , ProductSerializer
 # Create your views here.
 
 
-@api_view(['GET' ,'POST'])
+@api_view(['GET' ,'POST' ,'PUT','PATCH' ,'DELETE'])
 def category_api(request):
     if request.method == 'GET':
         categories = Category.objects.all()
@@ -22,9 +22,6 @@ def category_api(request):
             return Response({'message': 'Object Post successfuly'}, status=status.HTTP_201_CREATED)
         return Response(serializer.errors , status=status.HTTP_400_BAD_REQUEST)
     
-
-        
-
     
     
 @api_view(['GET' , 'POST'])
