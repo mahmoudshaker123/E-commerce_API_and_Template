@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
@@ -9,12 +9,18 @@ from .serializers import CategorySerializer  , ProductSerializer
 
 
 @api_view(['GET' ,'POST' ,'PUT','PATCH' ,'DELETE'])
-def category_api(request):
+def category_api(request , slug=None):
     if request.method == 'GET':
-        categories = Category.objects.all()
-        serializer  = CategorySerializer(categories , many=True)
-        return Response(serializer.data , status=status.HTTP_200_OK)
-    
+        if slug:
+            categories = get_object_or_404(Category , slug=slug)
+            serializer  = CategorySerializer(categories , many=True)
+            return Response(serializer.data , status=status.HTTP_200_OK)
+        else:
+            categories = Category.objects.all()
+            serializer = CategorySerializer(categories , many=True)
+            return Response(serializer.data , status=status.HTTP_200_OK)
+
+        
     elif request.method =='POST':
         serializer = CategorySerializer(data=request.data)
         if serializer.is_valid():
