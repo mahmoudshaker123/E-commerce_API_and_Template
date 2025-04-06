@@ -5,7 +5,7 @@ from django.urls import reverse
 
 class Category(models.Model):
     name = models.CharField(max_length=250)
-    slug = models.SlugField()
+    slug = models.SlugField(unique=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def save(self, *args, **kwargs):
