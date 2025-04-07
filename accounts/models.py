@@ -3,7 +3,7 @@ from django.contrib.auth.models import BaseUserManager, AbstractBaseUser
 import pycountry
 
 class MyAccountManager(BaseUserManager):
-    def create_user(self, first_name, last_name, username, country, email, password=None):
+    def create_user(self, first_name, last_name, username,phone_number, country, email, password=None):
         if not email:
             raise ValueError("User must have an email address")
         if not username:
@@ -14,7 +14,8 @@ class MyAccountManager(BaseUserManager):
             username=username,
             first_name=first_name,
             last_name=last_name,
-            country=country
+            country=country,
+            phone_number=phone_number
         )
         user.set_password(password)
         user.save(using=self._db)
