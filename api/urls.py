@@ -2,6 +2,7 @@ from django.urls import path
 from . import views
 
 
+
 app_name = 'api'
 
 urlpatterns = [
@@ -13,6 +14,8 @@ urlpatterns = [
     path('register/' , views.register_api , name='register_api'),
 
     path('activate/<uidb64>/<token>/', views.activate_account, name='activate_account'),
+
+   
 ]
 
 
