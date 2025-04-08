@@ -1,25 +1,7 @@
-# تجاهل بيئة العمل الافتراضية
-venv/
-ENV/
-env/
-
-# تجاهل ملفات البيئة
-.env
-
-# تجاهل ملفات Python المؤقتة
 __pycache__/
-*.py[cod]
-*.sqlite3
-
-# تجاهل ملفات النظام
-.DS_Store
-Thumbs.db
-
-# تجاهل ملفات المايجريشن المؤقتة (اختياري)
-*.log
-*.pot
 *.pyc
-
-# تجاهل إعدادات IDE
-.vscode/
-.idea/
+.env
+venv/
+db.sqlite3
+/static/
+/media/
