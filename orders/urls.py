@@ -1,6 +1,6 @@
 from django.urls import path
 from . import views
-
+from .api import order_api
 
 app_name = 'orders'
 
@@ -9,4 +9,8 @@ urlpatterns = [
     path('payment/<int:order_id>/', views.order_payment_by_vodafone, name='payment_order'),
     path('payment/success/<int:order_id>/', views.payment_success, name='payment_success'),
     path('admin/pdf/<int:order_id>/', views.admin_order_pdf, name='admin_order_pdf'),
+
+    #API URLS
+    path('api/create/',order_api, name='order_api'),
+
 ]

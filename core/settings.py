@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/5.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
+from datetime import timedelta
 import environ
 
 from pathlib import Path
@@ -61,6 +62,7 @@ INSTALLED_APPS = [
     'celery',
     'django_redis',
     'rest_framework_simplejwt',
+    'rest_framework_simplejwt.token_blacklist',
 
 
 
@@ -231,4 +233,11 @@ REST_FRAMEWORK = {
         
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     )
+}
+
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(days=1),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=5),
+    'BLACKLIST_AFTER_ROTATION': True,
 }

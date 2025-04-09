@@ -10,34 +10,8 @@ from django.contrib.auth.tokens import default_token_generator
 from django.core.mail import EmailMessage
 from django.conf import settings
 from accounts.models import Account
+from rest_framework_simplejwt.tokens import RefreshToken
 
-# دالة إرسال الإيميل
-def send_verification_email(email, activation_link):
-    subject = 'Activate your account'
-    body = f'Click the link to activate your account: {activation_link}'
-    from_email = settings.DEFAULT_FROM_EMAIL
-    email_msg = EmailMessage(subject=subject, body=body, from_email=from_email, to=[email])
-    email_msg.send()
-
-@api_view(['POST'])
-def register_api(request):
-    data = request.data
-    serializer = RegisterSerializer(data=data)
-    if serializer.is_valid():
-        user = serializer.save()
-        user.is_active = False 
-        user.save()
-
-        uid = urlsafe_base64_encode(force_bytes(user.pk))
-        token = default_token_generator.make_token(user)
-        current_site = request.get_host()
-        activation_link = f"http://{current_site}/api/activate/{uid}/{token}/"
-
-        send_verification_email(user.email, activation_link)
-
-        return Response({'message': 'User registered successfully. Please check your email to activate your account.'}, status=status.HTTP_201_CREATED)
-
-    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['GET'])
 def activate_account(request, uidb64, token):
@@ -126,3 +100,49 @@ def product_api(request, slug=None):
         return Response({'message': 'Object deleted successfully'}, status=status.HTTP_204_NO_CONTENT)
 
     return Response({'error': 'Invalid request'}, status=status.HTTP_400_BAD_REQUEST)
+
+
+def send_verification_email(email, activation_link):
+    subject = 'Activate your account'
+    body = f'Click the link to activate your account: {activation_link}'
+    from_email = settings.DEFAULT_FROM_EMAIL
+    email_msg = EmailMessage(subject=subject, body=body, from_email=from_email, to=[email])
+    email_msg.send()
+
+@api_view(['POST'])
+def register_api(request):
+    data = request.data
+    serializer = RegisterSerializer(data=data)
+    if serializer.is_valid():
+        user = serializer.save()
+        user.is_active = False 
+        user.save()
+
+        uid = urlsafe_base64_encode(force_bytes(user.pk))
+        token = default_token_generator.make_token(user)
+        current_site = request.get_host()
+        activation_link = f"http://{current_site}/api/activate/{uid}/{token}/"
+
+        send_verification_email(user.email, activation_link)
+
+        return Response({'message': 'User registered successfully. Please check your email to activate your account.'}, status=status.HTTP_201_CREATED)
+
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+
+
+@api_view(['POST'])
+def logout(request):
+    try:
+        refresh_token = request.data.get('refresh')
+        if not refresh_token:
+            return Response({'error': 'Refresh token not provided'}, status=status.HTTP_400_BAD_REQUEST)
+        token = RefreshToken(refresh_token)
+        token.blacklist()
+        return Response({'message': 'Logged out successfully'}, status=status.HTTP_205_RESET_CONTENT)
+
+
+    except Exception as e:
+        return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)   
+
